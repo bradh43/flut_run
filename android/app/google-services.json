@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "857239628083",
+    "firebase_url": "https://flutrun.firebaseio.com",
+    "project_id": "flutrun",
+    "storage_bucket": "flutrun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857239628083:android:10df515a5d21e115",
+        "android_client_info": {
+          "package_name": "bradhodkinson.flutrun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857239628083-719ifjjrvo3f0s8br50g7rrgkbi5f1a5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bradhodkinson.flutrun",
+            "certificate_hash": "c770b58e8ee7f1dae7786e7f8bffde99c544567a"
+          }
+        },
+        {
+          "client_id": "857239628083-du66pqk7859na12hi8s8tc660vg4fq6l.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "857239628083-du66pqk7859na12hi8s8tc660vg4fq6l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMklM26cSJtzYU2cmOIF0tpIsKJJkYlb4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857239628083-du66pqk7859na12hi8s8tc660vg4fq6l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
