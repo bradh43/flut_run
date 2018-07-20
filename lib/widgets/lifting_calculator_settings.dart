@@ -19,6 +19,32 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
   ScrollController _settingsListViewController = ScrollController();
 
   final liftSettingsKey = GlobalKey<FormState>();
+  TextEditingController textController = new TextEditingController();
+  FocusNode _focus = new FocusNode();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange(){
+    //if the last text field in the settings is selected scroll to the bottom
+    _settingsListViewController.animateTo(
+      _settingsListViewController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focus.dispose();
+    _settingsListViewController.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +67,6 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      //todo
                       preferredWeightSetting(),
                       clampSettings(),
                       barSettings(),
@@ -85,15 +110,14 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
             Text("kg"),
           ],
         ),
-        weightChoice(0.5, 0),
-        weightChoice(1.0, 1),
-        weightChoice(1.25, 2),
-        weightChoice(2.5, 3),
-        weightChoice(5.0, 4),
-        weightChoice(10.0, 5),
-        weightChoice(25.0, 6),
-        weightChoice(35.0, 7),
-        weightChoice(45.0, 8),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: liftingCalculatorData.plates.length,
+            itemBuilder: (context, index){
+              return weightChoice(liftingCalculatorData.plates[index], index);
+            }
+        ),
       ],
     );
   }
@@ -102,7 +126,7 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
     return Row(
       children: <Widget>[
         Checkbox(
-          value: liftingCalculatorData.plateSelected.elementAt(location),
+          value: liftingCalculatorData.plateSelected[location],
           onChanged: (val) => setState(() {
                 liftingCalculatorData.plateSelected.removeAt(location);
                 liftingCalculatorData.plateSelected.insert(location, val);
@@ -118,12 +142,21 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
 
   void updateUnitGroupValue(int e) {
     String units;
-    if (e == 1) {
-      units = "lb";
-    } else {
-      units = "kg";
-    }
     setState(() {
+      if (e == 1) {
+        units = "lb";
+        liftingCalculatorData.plates = liftingCalculatorData.lbPlates;
+        liftingCalculatorData.plateSelected = liftingCalculatorData.lbPlateSelected;
+        liftingCalculatorData.barWeight = liftingCalculatorData.lbBarWeight;
+        textController.text = liftingCalculatorData.barWeight.toString();
+      } else {
+        units = "kg";
+        liftingCalculatorData.plates = liftingCalculatorData.kgPlates;
+        liftingCalculatorData.plateSelected = liftingCalculatorData.kgPlateSelected;
+        liftingCalculatorData.barWeight = liftingCalculatorData.kgBarWeight;
+        textController.text = liftingCalculatorData.barWeight.toString();
+
+      }
       liftingCalculatorData.unitGroupValue = e;
     });
     liftingCalculatorData.liftingContentState.setState(() {
@@ -146,8 +179,9 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
             ),
           ],
         ),
-        clampChoice(0.5, 1, liftingCalculatorData.clampGroupValue),
-        clampChoice(1.0, 2, liftingCalculatorData.clampGroupValue)
+        clampChoice(liftingCalculatorData.units == "lb" ? 0.5 : 0.25, 1, liftingCalculatorData.clampGroupValue),
+        clampChoice(liftingCalculatorData.units == "lb" ? 1.0 : 0.5, 2, liftingCalculatorData.clampGroupValue),
+        clampChoice(2.5, 3, liftingCalculatorData.clampGroupValue),
       ],
     );
   }
@@ -181,9 +215,11 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
 
   void updateClampWeight(int val) {
     if (val == 1) {
-      liftingCalculatorData.clampWeight = 0.5;
+      liftingCalculatorData.clampWeight = liftingCalculatorData.units == "lb" ? 0.5 : 0.25;
+    } else if(val == 2){
+      liftingCalculatorData.clampWeight = liftingCalculatorData.units == "lb" ? 1.0 : 0.5;
     } else {
-      liftingCalculatorData.clampWeight = 1.0;
+      liftingCalculatorData.clampWeight = 2.5;
     }
     setState(() {
       liftingCalculatorData.clampGroupValue = val;
@@ -191,6 +227,7 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
   }
 
   Widget barSettings() {
+    textController.text = liftingCalculatorData.barWeight.toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -204,9 +241,11 @@ class LiftingCalculatorSettingsState extends State<LiftingCalculatorSettings> {
             key: liftSettingsKey,
             child: TextFormField(
               key: Key('bar'),
-              initialValue: liftingCalculatorData.barWeight.toString(),
+              controller: textController,
+              //initialValue: liftingCalculatorData.barWeight.toString(),
               autocorrect: false,
               autofocus: false,
+              focusNode: _focus,
               keyboardType: TextInputType.number,
               validator: (val) =>
                   val.isEmpty || num.parse(val).toDouble() == 0.0

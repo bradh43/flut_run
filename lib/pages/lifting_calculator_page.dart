@@ -312,6 +312,7 @@ class ContentState extends State<Content> {
       return Container(
         child: ListView.builder(
             controller: liftingCalculatorData.contentListViewController,
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.all(10.0),
             itemCount: liftingCalculatorData.weightsNeeded.length,

@@ -24,6 +24,31 @@ class SplitCalculatorSettings extends StatefulWidget {
 
 class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
   ScrollController _settingsListViewController = ScrollController();
+  FocusNode _focus = new FocusNode();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange(){
+    //if the last text field in the settings is selected scroll to the bottom
+    _settingsListViewController.animateTo(
+      _settingsListViewController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focus.dispose();
+    _settingsListViewController.dispose();
+  }
+
 
 
   @override
@@ -278,6 +303,7 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
           key: Key('lap distance'),
           autocorrect: false,
           autofocus: false,
+          focusNode: _focus,
           initialValue: splitData.lapDistance.toString(),
           validator: (val) => val.isEmpty || num.parse(val).toDouble() == 0.0
               ? 'Lap distance not properly filled out.'
