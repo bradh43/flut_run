@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flut_run/pages/mileage_planner_page.dart';
 import 'package:flut_run/widgets/distance.dart';
 import 'package:flut_run/widgets/time.dart';
@@ -48,16 +49,42 @@ class MileagePlannerSettingsState extends State<MileagePlannerSettings> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           //todo
+                          daySelector(),
                           calculateButton(),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 130.0),
                           )
                         ],
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 7.0),
+                      padding: EdgeInsets.symmetric(horizontal: 4.0),
                     ))
               ],
             )));
+  }
+
+
+
+  Widget daySelector(){
+    //todo
+    return Padding(
+      padding: EdgeInsets.all(5.0),
+      child: Card(
+        child: Container(
+          width: double.infinity,
+          child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Select Morning Runs", style: TextStyle(fontSize: 20.0),),
+                  Divider(),
+                  //todo
+                ],
+              ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget calculateButton() {

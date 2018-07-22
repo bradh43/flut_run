@@ -13,6 +13,7 @@ Time time = Time();
 Distance distance = Distance();
 
 int totalMileage = 0;
+List<String> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 ScrollController contentListViewController = ScrollController();
 ContentState mileageContentState;

@@ -184,7 +184,6 @@ class ContentState extends State<Content> {
             style: TextStyle(color: Colors.white, fontSize: 20.0)),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(30.0 / 2))),
-        //todo
         onPressed: () => calculateLift(),
       ),
     );
