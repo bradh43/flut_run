@@ -81,6 +81,7 @@ class SplitCalculatorPageState extends State<SplitCalculatorPage> {
       description: 'Tap the settings icon to get started & change settings.',
       action: () => _scaffoldKey.currentState.openEndDrawer(),
       child: IconButton(
+        tooltip: "Settings",
         icon: Icon(Icons.settings),
         onPressed: () => _scaffoldKey.currentState.openEndDrawer(),
       ),

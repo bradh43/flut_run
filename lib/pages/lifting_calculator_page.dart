@@ -62,6 +62,7 @@ class LiftingCalculatorPageState extends State<LiftingCalculatorPage> {
       description: 'Tap the settings icon to edit the default weight settings.',
       action: () => settingsAction(),
       child: IconButton(
+        tooltip: "Settings",
         icon: Icon(Icons.settings),
         onPressed: () => settingsAction(),
       ),

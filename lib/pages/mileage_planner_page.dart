@@ -86,6 +86,7 @@ class MileagePlannerPageState extends State<MileagePlannerPage> {
       description: 'Tap the settings icon to start planning miles and change the settings.',
       action: () => _scaffoldKey.currentState.openEndDrawer(),
       child: IconButton(
+        tooltip: "Settings",
         icon: Icon(Icons.settings),
         onPressed: () => _scaffoldKey.currentState.openEndDrawer(),
       ),

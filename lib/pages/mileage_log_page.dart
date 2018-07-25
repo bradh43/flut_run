@@ -85,6 +85,7 @@ class MileageLogPageState extends State<MileageLogPage> {
       //action: () => _scaffoldKey.currentState.openEndDrawer(),
       action: () => null,
       child: IconButton(
+        tooltip: "Current Day",
         icon: Icon(Icons.today),
         //todo
         onPressed: () => null,
@@ -100,7 +101,11 @@ class MileageLogPageState extends State<MileageLogPage> {
       title: 'Add Workout',
       description: 'Tap the plus icon to add workouts to the calendar.',
       action: () => null,
-      child: FloatingActionButton(onPressed: () => null, child: Icon(Icons.add),),
+      child: FloatingActionButton(
+        tooltip: "Add Workout",
+        onPressed: () => null,
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -114,6 +119,7 @@ class MileageLogPageState extends State<MileageLogPage> {
       //action: () => _scaffoldKey.currentState.openEndDrawer(),
       action: () => null,
       child: IconButton(
+        tooltip: "Settings",
         icon: Icon(Icons.settings),
         onPressed: () => _scaffoldKey.currentState.openEndDrawer(),
       ),

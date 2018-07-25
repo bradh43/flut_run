@@ -107,7 +107,7 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
                 value: 1,
                 groupValue: splitData.distanceGroupValue,
               ),
-              Text("M"),
+              Text("Mi"),
               Radio(
                 onChanged: (int e) => updateDistanceGroupValue(e),
                 activeColor: widget.themeData.accentColor,
@@ -121,7 +121,7 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
                 value: 3,
                 groupValue: splitData.distanceGroupValue,
               ),
-              Text("Mi"),
+              Text("M"),
             ],
           ),
           TextFormField(
@@ -282,7 +282,7 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
               value: 1,
               groupValue: splitData.lapGroupValue,
             ),
-            Text("M"),
+            Text("Mi"),
             Radio(
               onChanged: (int e) => updateLapGroupValue(e),
               activeColor: widget.themeData.accentColor,
@@ -296,7 +296,7 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
               value: 3,
               groupValue: splitData.lapGroupValue,
             ),
-            Text("Mi"),
+            Text("M"),
           ],
         ),
         TextFormField(
@@ -368,13 +368,13 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
     String unitString = " ";
     switch (unit) {
       case 1:
-        unitString = " M ";
+        unitString = " Mi ";
         break;
       case 2:
         unitString = " Km ";
         break;
       case 3:
-        unitString = " Mi ";
+        unitString = " M ";
         break;
     }
     return unitString;

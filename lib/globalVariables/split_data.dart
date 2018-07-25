@@ -24,7 +24,7 @@ double lapDistance = 400.0;
 String miPace = "0:00.0";
 String kmPace = "0:00.0";
 int distanceGroupValue = 1;
-int lapGroupValue = 1;
+int lapGroupValue = 3;
 
 
 String lapUnit = " M ";
