@@ -31,6 +31,9 @@ final List<ThemeData> teamThemeData = [
     highlightColor: const Color(0xFF007360),
     buttonColor: const Color(0xFFA51417),
     toggleableActiveColor: const Color(0xFFA51417),
+
+
+
   ),
   ThemeData(
     //Snohomish Theme colors
@@ -60,10 +63,10 @@ final List<ThemeData> teamThemeData = [
 
 void main() {
 
-  final ThemeData _themData = teamThemeData[1];
+  final ThemeData _themData = teamThemeData[0];
 
-  userData.imagePath = "assets/images/bears.png";
-  //userData.imagePath = "assets/images/lutes.png";
+  //userData.imagePath = "assets/images/bears.png";
+  userData.imagePath = "assets/images/lutes.png";
   //userData.imagePath = "assets/images/panther.png";
 
 

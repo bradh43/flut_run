@@ -130,7 +130,7 @@ class SplitCalculatorSettingsState extends State<SplitCalculatorSettings> {
             autocorrect: false,
             autofocus: false,
             keyboardType: TextInputType.number,
-            validator: (val) => val.isEmpty || num.parse(val).toDouble() == 0.0
+            validator: (val) => val.isEmpty || num.parse(val).toDouble() <= 0.0
                 ? 'Distance not properly filled out.'
                 : null,
             onSaved: (val) =>

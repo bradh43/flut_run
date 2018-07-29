@@ -89,7 +89,7 @@ class ContentState extends State<Content> {
   @override
   Widget build(BuildContext context) {
     if (liftingCalculatorData.showInitial) {
-      Timer(Duration(milliseconds: 2500),() => showFeature());
+      Timer(Duration(milliseconds: 2300),() => showFeature());
     }
     return liftingBody();
   }
@@ -122,7 +122,7 @@ class ContentState extends State<Content> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 50.0, vertical: 10.0),
+                                  horizontal: 50.0),
                               child: mainLogo.getImage(),
                             ),
                             totalWeightForm(),

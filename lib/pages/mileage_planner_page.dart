@@ -161,23 +161,18 @@ class ContentState extends State<Content> {
 
   Widget mileageBody(){
     return Scrollbar(
-      child: ListView(
+      child: ListView.builder(
         controller: mileagePlannerData.contentListViewController,
-        children: <Widget>[
-          day("Monday"),
-          day("Tuesday"),
-          day("Wednesday"),
-          day("Thursday"),
-          day("Friday"),
-          day("Saturday"),
-          day("Sunday"),
-        ],
-      )
+        itemCount: 7,
+        itemBuilder: (context, index){
+          return day(index);
+        }
+      ),
     );
   }
 
 
-  Widget day(String day){
+  Widget day(int index){
     return Opacity(
       opacity: 0.90,
       child: Card(
@@ -186,7 +181,7 @@ class ContentState extends State<Content> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-              child: Text(day, style: TextStyle(fontSize: 28.0)),
+              child: Text(mileagePlannerData.days[mileagePlannerData.dayOrder[index]], style: TextStyle(fontSize: 28.0)),
             ),
             Divider(),
             Row(
@@ -197,7 +192,7 @@ class ContentState extends State<Content> {
                     Column(
                       children: <Widget>[
                         Text("AM", style: TextStyle(fontSize: 20.0)),
-                        Text("4 Mi", style: TextStyle(fontSize: 24.0)),
+                        Text(mileagePlannerData.amRuns[index].toString() +" Mi", style: TextStyle(fontSize: 24.0)),
                       ],
                     ),
                     Column(
@@ -205,11 +200,11 @@ class ContentState extends State<Content> {
                         IconButton(
                             icon: Icon(Icons.add_circle),
                             iconSize: 25.0,
-                            onPressed: () => incrementMileage(4256)),
+                            onPressed: () => incrementMileage(index, "am")),
                         IconButton(
                             icon: Icon(Icons.remove_circle_outline),
                             iconSize: 25.0,
-                            onPressed: () => decrementMileage(3289)),
+                            onPressed: () => decrementMileage(index, "am")),
                       ],
                     ),
                   ],
@@ -219,7 +214,7 @@ class ContentState extends State<Content> {
                     Column(
                       children: <Widget>[
                         Text("PM", style: TextStyle(fontSize: 20.0)),
-                        Text("9 Mi", style: TextStyle(fontSize: 24.0)),
+                        Text(mileagePlannerData.pmRuns[index].toString() + " Mi", style: TextStyle(fontSize: 24.0)),
                       ],
                     ),
                     Column(
@@ -227,11 +222,11 @@ class ContentState extends State<Content> {
                         IconButton(
                             icon: Icon(Icons.add_circle),
                             iconSize: 25.0,
-                            onPressed: () => incrementMileage(4256)),
+                            onPressed: () => incrementMileage(index, "pm")),
                         IconButton(
                             icon: Icon(Icons.remove_circle_outline),
                             iconSize: 25.0,
-                            onPressed: () => decrementMileage(3289)),
+                            onPressed: () => decrementMileage(index, "pm")),
                       ],
                     ),
                   ],
@@ -244,12 +239,64 @@ class ContentState extends State<Content> {
     );
   }
 
-  void incrementMileage(int i) {
-    //todo
+  void incrementMileage(int i, String runType) {
+    setState(() {
+      switch(runType){
+        case "am":
+          mileagePlannerData.amRuns[i]++;
+          break;
+        case "pm":
+          mileagePlannerData.pmRuns[i]++;
+          break;
+        case "race":
+          //todo
+          break;
+        case "wu":
+          //todo
+          break;
+        case "cd":
+          //todo
+          break;
+      }
+    });
+    mileagePageState.setState(() {
+      mileagePlannerData.totalMileage++;
+    });
   }
 
-  void decrementMileage(int i) {
-    //todo
+  void decrementMileage(int i, String runType) {
+    bool decrementTotal = false;
+    setState(() {
+      switch(runType){
+        case "am":
+          if(mileagePlannerData.amRuns[i] > 0){
+            mileagePlannerData.amRuns[i]--;
+            decrementTotal = true;
+          }
+          break;
+        case "pm":
+          if(mileagePlannerData.pmRuns[i] > 0){
+            mileagePlannerData.pmRuns[i]--;
+            decrementTotal = true;
+          }
+          break;
+        case "race":
+        //todo
+          break;
+        case "wu":
+        //todo
+          break;
+        case "cd":
+        //todo
+          break;
+      }
+    });
+    if(decrementTotal){
+      mileagePageState.setState(() {
+        mileagePlannerData.totalMileage--;
+      });
+    }
+
   }
 
 }
