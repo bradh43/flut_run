@@ -4,7 +4,6 @@ import 'package:flut_run/widgets/hamburger_menu.dart';
 import 'package:flut_run/widgets/mileage_planner_settings.dart';
 import 'package:flut_run/overlays/feature_discovery.dart';
 import 'package:flut_run/globalVariables/mileage_planner_data.dart' as mileagePlannerData;
-import 'package:flut_run/widgets/distance.dart';
 import 'package:flut_run/widgets/main_logo_image.dart';
 
 MileagePlannerPageState mileagePageState;
