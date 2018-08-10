@@ -10,6 +10,8 @@ import 'package:flut_run/widgets/mileage_calculator.dart';
 
 enum runType { double, workout, long, rest, race }
 
+
+
 class MileagePlannerSettings extends StatefulWidget {
   MileagePlannerSettings(
       {this.themeData, this.mileagePage, this.time, this.distance});
@@ -62,6 +64,7 @@ class MileagePlannerSettingsState extends State<MileagePlannerSettings> {
                         dayRadioSelector("Long Run", runType.long),
                         dayRadioSelector("Rest Day", runType.rest),
                         raceDayRadioSelector("Race Day", runType.race),
+                        calculateButton(),
 
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 130.0),
@@ -316,10 +319,40 @@ class MileagePlannerSettingsState extends State<MileagePlannerSettings> {
               itemBuilder: (context, index) {
                 return raceDayRadioChoice(
                     mileagePlannerData.raceRestDayOrder[index], run);
-              }),
+              }
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text("Select Race:", style: TextStyle(fontSize: 16.0),),
+              DropdownButton(
+                value: mileagePlannerData.currentRace,
+                  items: getDropDownMenuItems(),
+                  onChanged: (race) => updateRaceItem(race)
+              ),
+            ],
+          ),
+
         ],
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = List();
+    for(String race in mileagePlannerData.races) {
+      items.add(DropdownMenuItem(
+          value: race,
+          child: Text(race)
+      ));
+    }
+    return items;
+  }
+
+  void updateRaceItem(String selectedRace) {
+    setState(() {
+      mileagePlannerData.currentRace = selectedRace;
+    });
   }
 
   Future<Null> _doubleInfo() async {
@@ -439,23 +472,41 @@ class MileagePlannerSettingsState extends State<MileagePlannerSettings> {
         if (e == 2) {
           mileagePlannerData.dayOrder = [6, 0, 1, 2, 3, 4, 5];
           mileagePlannerData.raceRestDayOrder = [6, 0, 1, 2, 3, 4, 5, 7];
+//          //make so start of week is sunday for am
+//          temp = mileagePlannerData.amRuns[0];
+//          mileagePlannerData.amRuns.removeAt(0);
+//          mileagePlannerData.amRuns.insert(0, mileagePlannerData.amRuns[6]);
+//          mileagePlannerData.amRuns.removeLast();
+//          mileagePlannerData.amRuns.add(temp);
+//          //make so start of week is sunday for pm
+//          temp = mileagePlannerData.pmRuns[0];
+//          mileagePlannerData.pmRuns.removeAt(0);
+//          mileagePlannerData.pmRuns.insert(0, mileagePlannerData.pmRuns[6]);
+//          mileagePlannerData.pmRuns.removeLast();
+//          mileagePlannerData.pmRuns.add(temp);
+
         } else {
           mileagePlannerData.dayOrder = [0, 1, 2, 3, 4, 5, 6];
           mileagePlannerData.raceRestDayOrder = [0, 1, 2, 3, 4, 5, 6, 7];
         }
       } else {
-        List<int> tempRuns = mileagePlannerData.amRuns;
+//        List<int> tempRuns = mileagePlannerData.amRuns;
+//        if (e == 2) {
+//          if (mileagePlannerData.amPractice) {
+//            mileagePlannerData.amRuns = mileagePlannerData.pmRuns;
+//            mileagePlannerData.pmRuns = tempRuns;
+//          }
+//          mileagePlannerData.amPractice = false;
+//        } else {
+//          if (!mileagePlannerData.amPractice) {
+//            mileagePlannerData.amRuns = mileagePlannerData.pmRuns;
+//            mileagePlannerData.pmRuns = tempRuns;
+//          }
+//          mileagePlannerData.amPractice = true;
+//        }
         if (e == 2) {
-          if (mileagePlannerData.amPractice) {
-            mileagePlannerData.amRuns = mileagePlannerData.pmRuns;
-            mileagePlannerData.pmRuns = tempRuns;
-          }
           mileagePlannerData.amPractice = false;
         } else {
-          if (!mileagePlannerData.amPractice) {
-            mileagePlannerData.amRuns = mileagePlannerData.pmRuns;
-            mileagePlannerData.pmRuns = tempRuns;
-          }
           mileagePlannerData.amPractice = true;
         }
       }
@@ -477,6 +528,7 @@ class MileagePlannerSettingsState extends State<MileagePlannerSettings> {
           duration: const Duration(milliseconds: 800),
         );
       });
+      Timer(Duration(milliseconds: 1000), () => Navigator.pop(context));
 
       //update the state of the mileage calculator page
       this.widget.mileagePage.setState(() {

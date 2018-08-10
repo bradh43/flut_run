@@ -63,10 +63,10 @@ final List<ThemeData> teamThemeData = [
 
 void main() {
 
-  final ThemeData _themData = teamThemeData[0];
+  final ThemeData _themData = teamThemeData[1];
 
-  //userData.imagePath = "assets/images/bears.png";
-  userData.imagePath = "assets/images/lutes.png";
+  userData.imagePath = "assets/images/bears.png";
+  //userData.imagePath = "assets/images/lutes.png";
   //userData.imagePath = "assets/images/panther.png";
 
 

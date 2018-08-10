@@ -183,59 +183,131 @@ class ContentState extends State<Content> {
               child: Text(mileagePlannerData.days[mileagePlannerData.dayOrder[index]], style: TextStyle(fontSize: 28.0)),
             ),
             Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text("AM", style: TextStyle(fontSize: 20.0)),
-                        Text(mileagePlannerData.amRuns[index].toString() +" Mi", style: TextStyle(fontSize: 24.0)),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        IconButton(
-                            icon: Icon(Icons.add_circle),
-                            iconSize: 25.0,
-                            onPressed: () => incrementMileage(index, "am")),
-                        IconButton(
-                            icon: Icon(Icons.remove_circle_outline),
-                            iconSize: 25.0,
-                            onPressed: () => decrementMileage(index, "am")),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text("PM", style: TextStyle(fontSize: 20.0)),
-                        Text(mileagePlannerData.pmRuns[index].toString() + " Mi", style: TextStyle(fontSize: 24.0)),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        IconButton(
-                            icon: Icon(Icons.add_circle),
-                            iconSize: 25.0,
-                            onPressed: () => incrementMileage(index, "pm")),
-                        IconButton(
-                            icon: Icon(Icons.remove_circle_outline),
-                            iconSize: 25.0,
-                            onPressed: () => decrementMileage(index, "pm")),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+            getDay(index),
           ],
         ),
       ),
     );
+  }
+
+  Widget getDay(int index){
+    if(mileagePlannerData.dayOrder[index] == mileagePlannerData.raceDayGroupValue){
+      return raceDay();
+    } else {
+      return normalDay(index);
+    }
+
+  }
+
+  Widget raceDay(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Text("Warm Up", style: TextStyle(fontSize: 16.0)),
+                Text(mileagePlannerData.warmUp.toString() +" Mi", style: TextStyle(fontSize: 24.0)),
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.add_circle),
+                    iconSize: 25.0,
+                    onPressed: () => incrementMileage(-1, "wu")),
+                IconButton(
+                    icon: Icon(Icons.remove_circle_outline),
+                    iconSize: 25.0,
+                    onPressed: () => decrementMileage(-1, "wu")),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          children: <Widget>[
+            Text("Race", style: TextStyle(fontSize: 16.0)),
+            Text(mileagePlannerData.currentRace, style: TextStyle(fontSize: 24.0)),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Text("Cool Down", style: TextStyle(fontSize: 16.0)),
+                Text(mileagePlannerData.coolDown.toString() +" Mi", style: TextStyle(fontSize: 24.0)),
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.add_circle),
+                    iconSize: 25.0,
+                    onPressed: () => incrementMileage(-1, "cd")),
+                IconButton(
+                    icon: Icon(Icons.remove_circle_outline),
+                    iconSize: 25.0,
+                    onPressed: () => decrementMileage(-1, "cd")),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget normalDay(int index){
+    if(mileagePlannerData.amPractice){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          showMileage("AM", index, "pm"),
+          showMileage("PM", index, "am"),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          showMileage("AM", index, "am"),
+          showMileage("PM", index, "pm"),
+        ],
+      );
+    }
+  }
+
+  Widget showMileage(String timeOfDay, int index, String displayTime){
+    return Row(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Text(timeOfDay, style: TextStyle(fontSize: 20.0)),
+            Text(getMiles(displayTime, index) +" Mi", style: TextStyle(fontSize: 24.0)),
+          ],
+        ),
+        Column(
+          children: <Widget>[
+            IconButton(
+                icon: Icon(Icons.add_circle),
+                iconSize: 25.0,
+                onPressed: () => incrementMileage(mileagePlannerData.dayOrder[index], displayTime)),
+            IconButton(
+                icon: Icon(Icons.remove_circle_outline),
+                iconSize: 25.0,
+                onPressed: () => decrementMileage(mileagePlannerData.dayOrder[index], displayTime)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  String getMiles(String displayTime, int index){
+    if(displayTime == "am"){
+      return mileagePlannerData.amRuns[mileagePlannerData.dayOrder[index]].toString();
+    } else {
+      return mileagePlannerData.pmRuns[mileagePlannerData.dayOrder[index]].toString();
+    }
   }
 
   void incrementMileage(int i, String runType) {
@@ -251,10 +323,10 @@ class ContentState extends State<Content> {
           //todo
           break;
         case "wu":
-          //todo
+          mileagePlannerData.warmUp++;
           break;
         case "cd":
-          //todo
+          mileagePlannerData.coolDown++;
           break;
       }
     });
@@ -283,10 +355,16 @@ class ContentState extends State<Content> {
         //todo
           break;
         case "wu":
-        //todo
+          if(mileagePlannerData.warmUp > 0){
+            mileagePlannerData.warmUp--;
+            decrementTotal = true;
+          }
           break;
         case "cd":
-        //todo
+          if(mileagePlannerData.coolDown > 0){
+            mileagePlannerData.coolDown--;
+            decrementTotal = true;
+          }
           break;
       }
     });
