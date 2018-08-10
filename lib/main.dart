@@ -33,7 +33,6 @@ final List<ThemeData> teamThemeData = [
     toggleableActiveColor: const Color(0xFFA51417),
 
 
-
   ),
   ThemeData(
     //Snohomish Theme colors
