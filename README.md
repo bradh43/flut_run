@@ -14,7 +14,7 @@ The user experiences a slash screen before being sent to the root page where it 
     </p>
   </span>
   <span style="float:right;width: 40%;">
-    <img src="splashScreen.gif" width="300">
+    <img src="splashScreen.gif" width="150">
   </span>
 </div>
 
