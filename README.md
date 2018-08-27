@@ -4,7 +4,7 @@ Personal project using Flutter framework and Dart API. This app is designed to b
 
 ## Overview
 <p>
-  <img align="right" src="splashScreen.gif" width="150">
+  <img align="right" src="splashScreen.gif" width="200">
   <p>
     This app is designed for running teams, the target group is high school, college and club teams. It offers many tools and features to help bring teams together and help them learn more about the art of running. The main features of the app include the following: mileage planner, mileage log, split calculator, message board, lifting calculator, and a race predictor. The goal of the app is to provide teams with a useful running tool that promotes learning and giving back to the running community. I hope to be able to finish the app and deploy it on both Apple App Store and Google Play Store. The plan is to have coaches or captains register teams accounts and send a unique cmaode to the rest of the team where they will be able to make their own account on a customized team app. The app will have the teams logo and colors throughout the app. 
 
@@ -17,6 +17,7 @@ The user experiences a slash screen before being sent to the root page where it 
 The login page uses firebase to authorize the user, and allows new users to register an account.
 
 <img src="loginPage.gif" width="300">
+
 
 
 ## App Features
