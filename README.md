@@ -17,7 +17,7 @@ The login page uses firebase to authorize the user, and allows new users to regi
 <img src="loginPage.gif" width="300">
 
 
-
+## App Features
 One of the primary features of this app is a mileage planner tool. This tool allows users to quickly plan out how far they are trying to run each day for a given weekly total mileage.  
 
 <img src="mileagePlanner.gif" width="300">
