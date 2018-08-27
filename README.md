@@ -9,4 +9,4 @@ The app offers many features in order to provide a good user experience. The app
 In addition to this the app provides a mileage planner tool in order to quickly plan out how far a runner is trying to run each day for a given weekly total mileage. 
 
 
-![](mileagePlanner.gif | width=100)
+![](mileagePlanner.gif){:height="50%" width="50%"}
